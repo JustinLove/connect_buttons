@@ -29,5 +29,5 @@
     });
   };
 
-  loadTemplate($('#navigation_items'), 'coui://ui/mods/connect_buttons/connect_buttons.html', model);
+  loadTemplate($('#navigation_items'), 'coui://ui/mods/connect_buttons/menu.html', model);
 })()

@@ -6,12 +6,12 @@
   "date": "2014/10/10",
   "description": "Buttons to connect to local or private servers.",
   "display_name": "Connect Buttons",
-  "forum": null,
+  "forum": "https://forums.uberent.com/threads/wip-connect-buttons.65096/",
   "identifier": "com.wondible.pa.connect_buttons",
   "priority": 100,
   "scenes": {
     "start": [
-      "coui://ui/mods/connect_buttons/connect_buttons.js"
+      "coui://ui/mods/connect_buttons/start.js"
     ]
   },
   "signature": "not yet implemented",
