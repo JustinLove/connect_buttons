@@ -12,6 +12,9 @@
   "scenes": {
     "start": [
       "coui://ui/mods/connect_buttons/start.js"
+    ],
+    "settings": [
+      "coui://ui/mods/connect_buttons/settings.js"
     ]
   },
   "signature": "not yet implemented",
