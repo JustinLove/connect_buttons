@@ -1,0 +1,15 @@
+<a href="#" class="nav_item" data-bind="click: toggleConnectButtonsMenu, click_sound: 'default', rollover_sound: 'default', css: { nav_item_disabled: !allowNewOrJoinGame() } ">
+  <div style="position: relative;">
+    <span class="nav_item_text" data-bind="css: { nav_item_text_disabled: !allowNewOrJoinGame() }">
+      Connect To...
+    </span>
+    <div class="nav_sub_item" style="display: none" data-bind="foreach: connectButtons, visible: showConnectButtonsMenu">
+      <div class="nav_item" data-bind="click: nav, click_sound: 'default', rollover_sound: 'default'">
+        <span class="nav_item_text" data-bind="text: title">
+          host:port
+        </span>
+      </div>
+    </div>
+  </div>
+</a>
+

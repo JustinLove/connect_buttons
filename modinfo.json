@@ -1,0 +1,20 @@
+{
+  "author": "wondible",
+  "build": "73823",
+  "category": ["main-menu", "ui"],
+  "context": "client",
+  "date": "2014/10/10",
+  "description": "Buttons to connect to local or private servers.",
+  "display_name": "Connect Buttons",
+  "forum": null,
+  "identifier": "com.wondible.pa.connect_buttons",
+  "priority": 100,
+  "scenes": {
+    "start": [
+      "coui://ui/mods/connect_buttons/connect_buttons.js"
+    ]
+  },
+  "signature": "not yet implemented",
+  "version": "0.1.0"
+}
+
