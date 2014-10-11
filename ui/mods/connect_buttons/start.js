@@ -1,8 +1,17 @@
 (function() {
-  var servers = [
-    {host: 'localhost', port: '6543'},
-    {host: '176.31.115.99', port: '53999'}
-  ]
+  var numberOfButtons = 3
+  var servers = []
+
+  for (var i = 1;i <= numberOfButtons;i++) {
+    var host = api.settings.isSet('server', 'connect_to_host_' + i, true)
+    var port = api.settings.isSet('server', 'connect_to_port_' + i, true)
+
+    if (host && host != '' && port && port != '') {
+      servers.push({host: host, port: port})
+    } else if (i == 1) {
+      servers.push({host: 'localhost', port: '6543'})
+    }
+  }
 
   model.connectButtons = servers.map(function(server) {
     return {
