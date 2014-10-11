@@ -1,16 +1,14 @@
 (function() {
   var numberOfButtons = 3
-  var list = []
+  var groups = []
 
   for (var i = 1;i <= numberOfButtons;i++) {
-    list.push('server.connect_to_host_'+i)
     api.settings.definitions.server.settings['connect_to_host_' + i] = {
       title: 'host ' + i,
       type: 'text',
       group: i.toString(),
       default: ''
     }
-    list.push('server.connect_to_port_'+i)
     api.settings.definitions.server.settings['connect_to_port_' + i] = {
       title: 'port ' + i,
       type: 'text',
@@ -26,13 +24,17 @@
   model.settingDefinitions(api.settings.definitions)
 
   var dummy = ko.observable('localhost')
-  model.connectButtonsSettingList = list.map(function(s) {
-    return model.settingsItemMap()[s]
-  })
+  model.connectButtonsSettingGroups = []
+  for (var i = 1;i <= numberOfButtons;i++) {
+    model.connectButtonsSettingGroups[i-1] = {parts: [
+      model.settingsItemMap()['server.connect_to_host_'+i],
+      model.settingsItemMap()['server.connect_to_port_'+i]
+    ]}
+  }
 
   var settingsHtml = 
-    '<div class="form-group">' +
-      '<div class="sub-group" data-bind="foreach: connectButtonsSettingList">' +
+    '<div class="form-group" data-bind="foreach: connectButtonsSettingGroups">' +
+      '<div class="sub-group" data-bind="foreach: parts">' +
         '<div class="option">' +
           '<label data-bind="text: title" >' +
             'title' +
