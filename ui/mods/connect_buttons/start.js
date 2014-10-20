@@ -6,10 +6,17 @@
     var host = api.settings.isSet('server', 'connect_to_host_' + i, true)
     var port = api.settings.isSet('server', 'connect_to_port_' + i, true)
 
+    if (i == 1) {
+      if (!host || host == '') {
+        host = 'localhost'
+      }
+      if (!port || port == '') {
+        port = '20545'
+      }
+    }
+
     if (host && host != '' && port && port != '') {
       servers.push({host: host, port: port})
-    } else if (i == 1) {
-      servers.push({host: 'localhost', port: '6543'})
     }
   }
 

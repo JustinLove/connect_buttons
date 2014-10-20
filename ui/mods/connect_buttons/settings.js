@@ -18,7 +18,7 @@
   }
 
   api.settings.definitions.server.settings['connect_to_host_1'].default = 'localhost'
-  api.settings.definitions.server.settings['connect_to_port_1'].default = '6543'
+  api.settings.definitions.server.settings['connect_to_port_1'].default = '20545'
 
   // force model.settingsLists to update
   model.settingDefinitions(api.settings.definitions)
