@@ -20,7 +20,7 @@
     }
   }
 
-  model.connectButtons = servers.map(function(server) {
+  var staticConnectButtons = servers.map(function(server) {
     return {
       title: [server.host, server.port].join(':'),
       nav: function() {
@@ -31,9 +31,41 @@
     }
   })
 
+  var reconnectButton = ko.computed(function() {
+    if (model.lobbyId()) {
+      return [{
+        title: "Reconnect Playfab",
+        nav: function() {
+          model.joinGame(model.lobbyId());
+        }
+      }]
+    } else {
+      return []
+    }
+  })
+
+  model.connectButtons = ko.computed(function() {
+    return staticConnectButtons.concat(reconnectButton())
+  })
+
+  model.lobbyId.subscribe(function(lobbyId) {
+    sessionStorage['lobbyId'] = encode(lobbyId);
+  })
+
+  var updateGameState = function () {
+    engine.asyncCall("ubernet.getGameWithPlayer").done(function (data) {
+      console.log(data, "getGameWithPlayer");
+      data = JSON.parse(data);
+      model.lobbyId(data.LobbyID);
+    })
+  }
+
   model.showConnectButtonsMenu = ko.observable(false)
   model.toggleConnectButtonsMenu = function() {
     model.showConnectButtonsMenu(!model.showConnectButtonsMenu())
+    if (model.showConnectButtonsMenu()) {
+      updateGameState()
+    }
   }
 
   var loadTemplate = function ($element, url, model) {
