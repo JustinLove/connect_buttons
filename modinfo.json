@@ -15,6 +15,12 @@
     ],
     "settings": [
       "coui://ui/mods/connect_buttons/settings.js"
+    ],
+    "connect_to_game": [
+      "coui://ui/mods/connect_buttons/connect_to_game.js"
+    ],
+    "server_browser": [
+      "coui://ui/mods/connect_buttons/server_browser.js"
     ]
   },
   "signature": "not yet implemented",
