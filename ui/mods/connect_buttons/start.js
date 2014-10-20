@@ -24,6 +24,7 @@
     return {
       title: [server.host, server.port].join(':'),
       nav: function() {
+        model.connectButtonsGame(null)
         model.connectButtonsLobbyId(null)
         model.gameHostname(server.host);
         model.gamePort(server.port);
@@ -45,22 +46,32 @@
     }
   })
 
+  model.connectButtonsGame = ko.observable().extend({local: 'connect_buttons_game'})
   model.connectButtonsLobbyId = ko.observable().extend({local: 'connect_buttons_lobby_id'})
   model.connectButtonsLobbyInfo = ko.observable().extend({local: 'connect_buttons_lobby_info'})
 
   var reconnectLastButton = ko.computed(function() {
-    if (model.connectButtonsLobbyId()) {
+    if (model.connectButtonsGame()) {
+      var game = model.connectButtonsGame()
       return [{
-        title: "Reconnect Last",
+        title: "Last " + game.name,
+        nav: function() {
+          api.Panel.message('game', 'join_lobby', model.connectButtonsLobbyInfo())
+        }
+      }]
+    } else if (model.connectButtonsLobbyId()) {
+      return [{
+        title: "Last (PlayFab)",
         nav: function() {
           model.joinGame(model.connectButtonsLobbyId());
         }
       }]
     } else if (model.connectButtonsLobbyInfo()) {
+      var info = model.connectButtonsLobbyInfo()
       return [{
-        title: "Reconnect Last",
+        title: "Last " + info.game_hostname + ':' + info.game_port,
         nav: function() {
-          api.Panel.message('game', 'join_lobby', model.connectButtonsLobbyInfo())
+          api.Panel.message('game', 'join_lobby', info)
         }
       }]
     } else {
