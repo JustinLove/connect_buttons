@@ -46,6 +46,35 @@
     }
   })
 
+  // exactly like model.joinGame, except we can get the failure event
+  var joinGame = function (lobbyId) {
+
+    model.showConnecting(true);
+    $("#msg_progress").text(loc("!LOC(start:reconnecting_to_game.message):Reconnecting to Game"));
+    $("#connecting").dialog('open');
+
+    engine.asyncCall("ubernet.joinGame", lobbyId).done(function (data) {
+
+      data = JSON.parse(data);
+
+      model.isLocalGame(false);
+      model.gameTicket(data.Ticket);
+      model.gameHostname(data.ServerHostname);
+      model.gamePort(data.ServerPort);
+
+      window.location.href = 'coui://ui/main/game/connect_to_game/connect_to_game.html';
+      return; /* window.location.href will not stop execution. */
+    }).fail(function (data) {
+      model.connectButtonsConnectionInfo(null)
+    }).always(function () {
+      if (model.showConnecting()) {
+        model.showConnecting(false);
+        $("#connecting").dialog("close");
+      }
+    });
+  };
+
+
   model.connectButtonsConnectionInfo = ko.observable().extend({local: 'connect_buttons_connection_info'})
   model.privateGamePassword = ko.observable().extend({ session: 'private_game_password' });
 
@@ -59,7 +88,7 @@
 
   var navToLobby = function(lobby_id) {
     return function() {
-      model.joinGame(lobby_id)
+      joinGame(lobby_id)
     }
   }
 
