@@ -46,33 +46,50 @@
     }
   })
 
-  model.connectButtonsGame = ko.observable().extend({local: 'connect_buttons_game'})
-  model.connectButtonsLobbyId = ko.observable().extend({local: 'connect_buttons_lobby_id'})
-  model.connectButtonsLobbyInfo = ko.observable().extend({local: 'connect_buttons_lobby_info'})
+  model.connectButtonsConnectionInfo = ko.observable().extend({local: 'connect_buttons_connection_info'})
+  model.privateGamePassword = ko.observable().extend({ session: 'private_game_password' });
+
+  var reconnectLastTitle = function(info) {
+    if (info.name && info.name != '') {
+      return info.name
+    } else {
+      return "Last " + info.game_hostname + ':' + info.game_port
+    }
+  }
+
+  var navToLobby = function(lobby_id) {
+    return function() {
+      model.joinGame(lobby_id)
+    }
+  }
+
+  var navToHostPort = function(info) {
+    return function() {
+      model.isLocalGame(info.local_game);
+      model.gameTicket(info.ticket);
+      model.gameHostname(info.game_hostname);
+      model.gamePort(info.game_port);
+      model.privateGamePassword(info.game_password);
+
+      window.location.href = 'coui://ui/main/game/connect_to_game/connect_to_game.html';
+    }
+  }
+
+  var reconnectLastNav = function(info) {
+    var port = parseInt(info.game_port, 10)
+    if (info.lobby_id && port >= 9000 && port < 9100) {
+      return navToLobby(info.lobby_id)
+    } else {
+      return navToHostPort(info)
+    }
+  }
 
   var reconnectLastButton = ko.computed(function() {
-    if (model.connectButtonsGame()) {
-      var game = model.connectButtonsGame()
+    if (model.connectButtonsConnectionInfo()) {
+      var info = model.connectButtonsConnectionInfo()
       return [{
-        title: "Last " + game.name,
-        nav: function() {
-          api.Panel.message('game', 'join_lobby', model.connectButtonsLobbyInfo())
-        }
-      }]
-    } else if (model.connectButtonsLobbyId()) {
-      return [{
-        title: "Last (PlayFab)",
-        nav: function() {
-          model.joinGame(model.connectButtonsLobbyId());
-        }
-      }]
-    } else if (model.connectButtonsLobbyInfo()) {
-      var info = model.connectButtonsLobbyInfo()
-      return [{
-        title: "Last " + info.game_hostname + ':' + info.game_port,
-        nav: function() {
-          api.Panel.message('game', 'join_lobby', info)
-        }
+        title: reconnectLastTitle(info),
+        nav: reconnectLastNav(info)
       }]
     } else {
       return []
