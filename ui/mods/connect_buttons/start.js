@@ -24,8 +24,7 @@
     return {
       title: [server.host, server.port].join(':'),
       nav: function() {
-        model.connectButtonsGame(null)
-        model.connectButtonsLobbyId(null)
+        model.connectButtonsConnectionInfo(null)
         model.gameHostname(server.host);
         model.gamePort(server.port);
         window.location.href = 'coui://ui/main/game/connect_to_game/connect_to_game.html';
@@ -65,7 +64,7 @@
       window.location.href = 'coui://ui/main/game/connect_to_game/connect_to_game.html';
       return; /* window.location.href will not stop execution. */
     }).fail(function (data) {
-      model.connectButtonsConnectionInfo(null)
+      navToHostPort(model.connectButtonsConnectionInfo())()
     }).always(function () {
       if (model.showConnecting()) {
         model.showConnecting(false);
@@ -106,7 +105,7 @@
 
   var reconnectLastNav = function(info) {
     var port = parseInt(info.game_port, 10)
-    if (info.lobby_id && port >= 9000 && port < 9100) {
+    if (info.lobby_id) {
       return navToLobby(info.lobby_id)
     } else {
       return navToHostPort(info)

@@ -1,12 +1,12 @@
 {
   "author": "wondible",
-  "build": "73939",
+  "build": "74525",
   "category": ["main-menu", "ui"],
   "context": "client",
-  "date": "2014/10/26",
+  "date": "2014/11/03",
   "description": "Buttons to connect to local or private servers, and reconnect to last game.",
   "display_name": "Connect Buttons",
-  "forum": "https://forums.uberent.com/threads/wip-connect-buttons.65096/",
+  "forum": "https://forums.uberent.com/threads/rel-connect-buttons.65769/",
   "identifier": "com.wondible.pa.connect_buttons",
   "priority": 100,
   "scenes": {
@@ -24,6 +24,6 @@
     ]
   },
   "signature": "not yet implemented",
-  "version": "0.3.0"
+  "version": "1.0.0"
 }
 
