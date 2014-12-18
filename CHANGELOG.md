@@ -1,3 +1,7 @@
+## 1.0.1
+
+- Update start menu buttons circa 76456
+
 ## 1.0.0
 
 - Always attempt lobby id if we've got it, and fail over to host-port
