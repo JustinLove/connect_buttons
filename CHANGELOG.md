@@ -1,3 +1,7 @@
+## 1.1.0
+
+- Support for active-product/expansion/content-mode in 86422, e.g. titans
+
 ## 1.0.1
 
 - Update start menu buttons circa 76456

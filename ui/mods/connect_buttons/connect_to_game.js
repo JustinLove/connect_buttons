@@ -16,6 +16,7 @@
       'local_game': Boolean(model.joinLocalServer()),
       'ticket': String(model.gameTicket()),
       'game_password': model.privateGamePassword(),
+      'content': model.gameContent(),
       'lobby_id': lobbyId()
     }
   })

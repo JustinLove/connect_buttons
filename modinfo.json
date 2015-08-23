@@ -1,9 +1,9 @@
 {
   "author": "wondible",
-  "build": "76456",
+  "build": "86422",
   "category": ["main-menu", "ui"],
   "context": "client",
-  "date": "2014/12/17",
+  "date": "2015/08/23",
   "description": "Buttons to connect to local or private servers, and reconnect to last game.",
   "display_name": "Connect Buttons",
   "forum": "https://forums.uberent.com/threads/rel-connect-buttons.65769/",
@@ -24,6 +24,6 @@
     ]
   },
   "signature": "not yet implemented",
-  "version": "1.0.1"
+  "version": "1.1.0"
 }
 

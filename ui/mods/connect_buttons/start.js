@@ -27,7 +27,12 @@
         model.connectButtonsConnectionInfo(null)
         model.gameHostname(server.host);
         model.gamePort(server.port);
-        window.location.href = 'coui://ui/main/game/connect_to_game/connect_to_game.html';
+
+        var params = {
+          content: api.content.activeContent(),
+        };
+
+        window.location.href = 'coui://ui/main/game/connect_to_game/connect_to_game.html?' + $.param(params);
       }
     }
   })
@@ -37,7 +42,7 @@
       return [{
         title: "Reconnect Playfab",
         nav: function() {
-          model.joinGame(model.lobbyId());
+          model.rejoinGame();
         }
       }]
     } else {
@@ -45,23 +50,28 @@
     }
   })
 
-  // exactly like model.joinGame, except we can get the failure event
   var joinGame = function (lobbyId) {
 
     model.showConnecting(true);
     $("#msg_progress").text(loc("!LOC(start:reconnecting_to_game.message):Reconnecting to Game"));
     $("#connecting").dialog('open');
 
+
     engine.asyncCall("ubernet.joinGame", lobbyId).done(function (data) {
 
       data = JSON.parse(data);
 
-      model.isLocalGame(false);
+      var joinLocalServer = ko.observable().extend({ session: 'join_local_server' });
+      joinLocalServer(false);
       model.gameTicket(data.Ticket);
       model.gameHostname(data.ServerHostname);
       model.gamePort(data.ServerPort);
 
-      window.location.href = 'coui://ui/main/game/connect_to_game/connect_to_game.html';
+      var params = {
+        content: model.reconnectContent(),
+      };
+      window.location.href = 'coui://ui/main/game/connect_to_game/connect_to_game.html?' + $.param(params);
+
       return; /* window.location.href will not stop execution. */
     }).fail(function (data) {
       navToHostPort(model.connectButtonsConnectionInfo())()
@@ -76,6 +86,7 @@
 
   model.connectButtonsConnectionInfo = ko.observable().extend({local: 'connect_buttons_connection_info'})
   model.privateGamePassword = ko.observable().extend({ session: 'private_game_password' });
+  console.log(model.connectButtonsConnectionInfo())
 
   var reconnectLastTitle = function(info) {
     if (info.name && info.name != '') {
@@ -99,7 +110,14 @@
       model.gamePort(info.game_port);
       model.privateGamePassword(info.game_password);
 
-      window.location.href = 'coui://ui/main/game/connect_to_game/connect_to_game.html';
+      var params = {
+        content: info.content,
+      };
+      if (model.isLocalGame()) {
+        params['local'] = true;
+      }
+
+      window.location.href = 'coui://ui/main/game/connect_to_game/connect_to_game.html?' + $.param(params);
     }
   }
 
@@ -137,6 +155,13 @@
       console.log(data, "getGameWithPlayer");
       data = JSON.parse(data);
       model.lobbyId(data.LobbyID);
+
+      var mode = data.GameMode || '';
+      if (mode.indexOf(':') > 0) {
+        self.reconnectContent(mode.substr(0, mode.indexOf(':')));
+      } else {
+        self.reconnectContent(null);
+      }
     })
   }
 
