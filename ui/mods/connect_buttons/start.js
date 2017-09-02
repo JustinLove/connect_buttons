@@ -24,9 +24,9 @@
     return {
       title: [server.host, server.port].join(':'),
       nav: function() {
-        model.connectButtonsConnectionInfo(null)
         model.gameHostname(server.host);
         model.gamePort(server.port);
+        model.serverType('custom')
 
         var params = {
           content: api.content.activeContent(),
@@ -50,100 +50,8 @@
     }
   })
 
-  var joinGame = function (lobbyId) {
-
-    model.showConnecting(true);
-    $("#msg_progress").text(loc("!LOC(start:reconnecting_to_game.message):Reconnecting to Game"));
-    $("#connecting").dialog('open');
-
-
-    engine.asyncCall("ubernet.joinGame", lobbyId).done(function (data) {
-
-      data = JSON.parse(data);
-
-      var joinLocalServer = ko.observable().extend({ session: 'join_local_server' });
-      joinLocalServer(false);
-      model.gameTicket(data.Ticket);
-      model.gameHostname(data.ServerHostname);
-      model.gamePort(data.ServerPort);
-
-      var params = {
-        content: model.reconnectContent(),
-      };
-      window.location.href = 'coui://ui/main/game/connect_to_game/connect_to_game.html?' + $.param(params);
-
-      return; /* window.location.href will not stop execution. */
-    }).fail(function (data) {
-      navToHostPort(model.connectButtonsConnectionInfo())()
-    }).always(function () {
-      if (model.showConnecting()) {
-        model.showConnecting(false);
-        $("#connecting").dialog("close");
-      }
-    });
-  };
-
-
-  model.connectButtonsConnectionInfo = ko.observable().extend({local: 'connect_buttons_connection_info'})
-  model.privateGamePassword = ko.observable().extend({ session: 'private_game_password' });
-  console.log(model.connectButtonsConnectionInfo())
-
-  var reconnectLastTitle = function(info) {
-    if (info.name && info.name != '') {
-      return info.name
-    } else {
-      return "Last " + info.game_hostname + ':' + info.game_port
-    }
-  }
-
-  var navToLobby = function(lobby_id) {
-    return function() {
-      joinGame(lobby_id)
-    }
-  }
-
-  var navToHostPort = function(info) {
-    return function() {
-      model.isLocalGame(info.local_game);
-      model.gameTicket(info.ticket);
-      model.gameHostname(info.game_hostname);
-      model.gamePort(info.game_port);
-      model.privateGamePassword(info.game_password);
-
-      var params = {
-        content: info.content,
-      };
-      if (model.isLocalGame()) {
-        params['local'] = true;
-      }
-
-      window.location.href = 'coui://ui/main/game/connect_to_game/connect_to_game.html?' + $.param(params);
-    }
-  }
-
-  var reconnectLastNav = function(info) {
-    var port = parseInt(info.game_port, 10)
-    if (info.lobby_id) {
-      return navToLobby(info.lobby_id)
-    } else {
-      return navToHostPort(info)
-    }
-  }
-
-  var reconnectLastButton = ko.computed(function() {
-    if (model.connectButtonsConnectionInfo()) {
-      var info = model.connectButtonsConnectionInfo()
-      return [{
-        title: reconnectLastTitle(info),
-        nav: reconnectLastNav(info)
-      }]
-    } else {
-      return []
-    }
-  })
-
   model.connectButtons = ko.computed(function() {
-    return staticConnectButtons.concat(playfabButton()).concat(reconnectLastButton())
+    return staticConnectButtons.concat(playfabButton())
   })
 
   model.lobbyId.subscribe(function(lobbyId) {

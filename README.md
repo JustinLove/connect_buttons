@@ -4,8 +4,6 @@ Quick and dirty way to connect to hand-started local servers, and private server
 
 The mod will check if you are currently assigned to a game on PlayFab, and provide a reconnect option if so.
 
-The mod attempts to track when you connect to a game, and provides a means to reconnect to the last game.
-
 ## Titans
 
 The static connect buttons use your global "Active Product" setting.

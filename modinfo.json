@@ -1,10 +1,10 @@
 {
   "author": "wondible",
-  "build": "86422",
-  "category": ["main-menu", "ui"],
+  "build": "105067",
+  "category": ["main-menu"],
   "context": "client",
-  "date": "2015/08/23",
-  "description": "Buttons to connect to local or private servers, and reconnect to last game.",
+  "date": "2017/09/02",
+  "description": "Buttons to connect to local or private servers.",
   "display_name": "Connect Buttons",
   "forum": "https://forums.uberent.com/threads/rel-connect-buttons.65769/",
   "identifier": "com.wondible.pa.connect_buttons",
@@ -15,15 +15,9 @@
     ],
     "settings": [
       "coui://ui/mods/connect_buttons/settings.js"
-    ],
-    "connect_to_game": [
-      "coui://ui/mods/connect_buttons/connect_to_game.js"
-    ],
-    "server_browser": [
-      "coui://ui/mods/connect_buttons/server_browser.js"
     ]
   },
   "signature": "not yet implemented",
-  "version": "1.1.0"
+  "version": "2.0.0"
 }
 
