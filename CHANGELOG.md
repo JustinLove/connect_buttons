@@ -1,3 +1,7 @@
+## 2.0.1
+
+- Rename host to Hostname/IP Address
+
 ## 2.0.0
 
 - Removed reconnect-last on advice of mikeyh

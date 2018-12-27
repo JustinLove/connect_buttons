@@ -4,7 +4,7 @@
 
   for (var i = 1;i <= numberOfButtons;i++) {
     api.settings.definitions.server.settings['connect_to_host_' + i] = {
-      title: 'host ' + i,
+      title: 'Hostname/IP Address ' + i,
       type: 'text',
       group: i.toString(),
       default: ''
