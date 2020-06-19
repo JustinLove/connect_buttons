@@ -5,6 +5,7 @@
   for (var i = 1;i <= numberOfButtons;i++) {
     var host = api.settings.isSet('server', 'connect_to_host_' + i, true)
     var port = api.settings.isSet('server', 'connect_to_port_' + i, true)
+    var locked = (api.settings.isSet('server', 'connect_to_locked_' + i, true) == 'ON')
 
     if (i == 1) {
       if (!host || host == '') {
@@ -16,23 +17,32 @@
     }
 
     if (host && host != '' && port && port != '') {
-      servers.push({host: host, port: port})
+      servers.push({host: host, port: port, locked: locked})
     }
+  }
+
+  var connectToGame = function(server) {
+    model.gameHostname(server.host);
+    model.gamePort(server.port);
+    model.serverType('custom')
+
+    var params = {
+      content: api.content.activeContent(),
+    };
+
+    window.location.href = 'coui://ui/main/game/connect_to_game/connect_to_game.html?' + $.param(params);
   }
 
   var staticConnectButtons = servers.map(function(server) {
     return {
       title: [server.host, server.port].join(':'),
       nav: function() {
-        model.gameHostname(server.host);
-        model.gamePort(server.port);
-        model.serverType('custom')
-
-        var params = {
-          content: api.content.activeContent(),
-        };
-
-        window.location.href = 'coui://ui/main/game/connect_to_game/connect_to_game.html?' + $.param(params);
+        if (server.locked) {
+          model.connectButtonsPendingServer(server)
+          $('#getPassword').modal('show');
+        } else {
+          connectToGame(server);
+        }
       }
     }
   })
@@ -49,6 +59,8 @@
       return []
     }
   })
+
+  model.connectButtonsPendingServer = ko.observable()
 
   model.connectButtons = ko.computed(function() {
     return staticConnectButtons.concat(playfabButton())
@@ -81,12 +93,19 @@
     }
   }
 
+  model.joinWithPassword = function () {
+    connectToGame(model.connectButtonsPendingServer())
+  }
+
   var loadTemplate = function ($element, url, model) {
     $.get(url, function (html) {
       console.log("Loading html " + url);
       var $item = $(html)
       ko.applyBindings(model, $item.get(0));
       $element.append($item)
+
+      $('#getPassword').modal()
+      $('#getPassword').on('shown.bs.modal', function() { console.log('show');$('#password').focus().select();});
     });
   };
 
