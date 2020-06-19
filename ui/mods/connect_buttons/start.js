@@ -98,6 +98,11 @@
     connectToGame(model.connectButtonsPendingServer())
   }
 
+  model.textConnectTo = loc("!LOC:Connect To")
+  model.textLockedGame = loc("!LOC:Locked Game")
+  model.textPassword = loc("!LOC:Password")
+  model.textJoinGame = loc("!LOC:Join Game")
+
   var loadTemplate = function ($element, url, model) {
     $.get(url, function (html) {
       console.log("Loading html " + url);

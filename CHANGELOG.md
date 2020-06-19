@@ -1,6 +1,7 @@
 ## 2.1.0
 
 - Servers can be marked as requires password. If so, a password dialog will be shown before connecting.
+- Set up templates for localization
 
 ## 2.0.1
 

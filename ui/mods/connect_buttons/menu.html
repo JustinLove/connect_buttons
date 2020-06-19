@@ -1,6 +1,6 @@
 <div class="nav_cascade_group">
   <div class="btn_std_ix nav_item nav_item_text" data-bind="click: toggleConnectButtonsMenu, click_sound: 'default', rollover_sound: 'default', css: { nav_item_text_disabled: !allowNewOrJoinGame(), btn_std_ix_active: showConnectButtonsMenu }">
-    Connect To<div class="glyphicon glyphicon-chevron-right nav_carat" aria-hidden="true"></div>
+    <loc data-bind="text: textConnectTo">Connect To</loc><div class="glyphicon glyphicon-chevron-right nav_carat" aria-hidden="true"></div>
   </div>
   <div class="nav_sub_item" style="display: none" data-bind="foreach: connectButtons, visible: showConnectButtonsMenu">
     <div class="btn_std_ix nav_item nav_item_text" data-bind="click: nav, click_sound: 'default', rollover_sound: 'default', text: title">
@@ -15,20 +15,20 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="getPasswordLabel">
-                    <loc>Locked Game</loc>
+                    <loc data-bind="text: textLockedGame">Locked Game</loc>
                 </h4>
             </div>
             <div class="modal-body">
                 <div class="form-group">
                     <label for="password">
-                        <loc>Password</loc>
+                        <loc data-bind="text: textPassword">Password</loc>
                     </label>
                     <input type="password" class="form-control" id="password" placeholder="Enter game password" data-bind="value: privateGamePassword" />
                 </div>
             </div>
             <div class="modal-footer">
                 <button id="passwordJoin" data-bind="click: joinWithPassword, click_sound: 'default', rollover_sound: 'default'">
-                    <loc>Join Game</loc>
+                    <loc data-bind="text: textJoinGame">Join Game</loc>
                 </button>
             </div>
         </div>
