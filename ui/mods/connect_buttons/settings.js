@@ -4,23 +4,23 @@
 
   for (var i = 1;i <= numberOfButtons;i++) {
     api.settings.definitions.server.settings['connect_to_host_' + i] = {
-      title: 'Hostname/IP Address ' + i,
+      title: loc('!LOC:Hostname/IP Address') + ' ' + i,
       type: 'text',
       group: i.toString(),
       default: ''
     }
     api.settings.definitions.server.settings['connect_to_port_' + i] = {
-      title: 'port ' + i,
+      title: loc('!LOC:port') + ' ' + i,
       type: 'text',
       group: i.toString(),
       default: ''
     }
     api.settings.definitions.server.settings['connect_to_locked_' + i] = {
-      title: 'Requries Password ' + i,
+      title: loc('!LOC:Requires Password') + ' ' + i,
       group: i.toString(),
       type: 'select',
       options: ['OFF', 'ON'],
-      optionsText: ['!LOC:OFF', '!LOC:ON'],
+      optionsText: [loc('!LOC:OFF'), loc('!LOC:ON')],
       default: 'OFF',
     }
   }
@@ -52,7 +52,7 @@
           '<select class="selectpicker form-control" name="dropdown"' +
               'data-bind="options: $data.options,' +
               'optionsValue: function (item) { return item.value },' +
-              'optionsText: function (item) { return loc( item.text ) },' +
+              'optionsText: function (item) { return item.text },' +
               'selectPicker: $data.value,' +
               'attr: { disabled: !$data.isEnabled }">' +
           '</select>' +
