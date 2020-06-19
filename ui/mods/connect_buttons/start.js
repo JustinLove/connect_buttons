@@ -11,9 +11,10 @@
       if (!host || host == '') {
         host = 'localhost'
       }
-      if (!port || port == '') {
-        port = '20545'
-      }
+    }
+
+    if (!port || port == '') {
+      port = '20545'
     }
 
     if (host && host != '' && port && port != '') {
