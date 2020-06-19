@@ -1,3 +1,7 @@
+## 2.1.0
+
+- Servers can be marked as requires password. If so, a password dialog will be shown before connecting.
+
 ## 2.0.1
 
 - Rename host to Hostname/IP Address

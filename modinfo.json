@@ -1,9 +1,9 @@
 {
   "author": "wondible",
-  "build": "112314",
+  "build": "114475",
   "category": ["main-menu"],
   "context": "client",
-  "date": "2018/12/27",
+  "date": "2020/06/19",
   "description": "Buttons to connect to local or private servers.",
   "display_name": "Connect Buttons",
   "forum": "https://forums.uberent.com/threads/rel-connect-buttons.65769/",
@@ -18,6 +18,6 @@
     ]
   },
   "signature": "not yet implemented",
-  "version": "2.0.1"
+  "version": "2.1.0"
 }
 
